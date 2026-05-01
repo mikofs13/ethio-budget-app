@@ -1,33 +1,51 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
+import { Ionicons } from '@expo/vector-icons';
 
 import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useFinance } from '@/store/FinanceStore';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const { colors } = useFinance();
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarActiveTintColor: colors.primary,
+        tabBarInactiveTintColor: colors.subtle,
         headerShown: false,
         tabBarButton: HapticTab,
+        tabBarLabelStyle: {
+          fontSize: 12,
+          fontWeight: '800',
+        },
+        tabBarStyle: {
+          backgroundColor: colors.tab,
+          borderTopColor: colors.line,
+          height: 68,
+          paddingBottom: 9,
+          paddingTop: 8,
+        },
       }}>
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          title: 'Dashboard',
+          tabBarIcon: ({ color }) => <Ionicons size={24} name="grid" color={color} />,
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="import"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: 'Import',
+          tabBarIcon: ({ color }) => <Ionicons size={24} name="scan" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="transactions"
+        options={{
+          title: 'Activity',
+          tabBarIcon: ({ color }) => <Ionicons size={24} name="receipt" color={color} />,
         }}
       />
     </Tabs>
